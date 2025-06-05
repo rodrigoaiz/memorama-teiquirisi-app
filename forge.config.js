@@ -4,6 +4,7 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: './src/assets/icon', // Asegúrate de que esta ruta sea correcta
   },
   rebuildConfig: {},
   makers: [
@@ -14,6 +15,9 @@ module.exports = {
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
+      config: {
+        // Configuración para macOS
+      },
     },
     {
       name: '@electron-forge/maker-deb',
@@ -41,4 +45,12 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  publishers: [],
+  // Esta es la parte importante para la compilación universal
+  packagerConfig: {
+    // Para crear binarios tanto para Intel como Apple Silicon
+    arch: ['x64', 'arm64'],
+    // O puedes crear un paquete universal (contiene ambas arquitecturas)
+    // arch: 'universal'
+  }
 };
